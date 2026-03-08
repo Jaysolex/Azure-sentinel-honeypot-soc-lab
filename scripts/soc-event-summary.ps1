@@ -1,8 +1,11 @@
 <#
 SOC Detection Lab - Security Event Summary
 
-Author: Jay
-Purpose:
+Author: Solomon James
+Purpose: Collect and summarize important Windows Security Event IDs from the
+Security event log to help detect suspicious authentication activity,
+privileged access, and potential attack patterns in a SOC environment.
+
 Summarize critical Windows Security Event IDs for SOC monitoring.
 
 Events monitored:
@@ -51,3 +54,4 @@ ForEach-Object {
         Count = $_.Count
     }
 } | Format-Table -AutoSize
+
