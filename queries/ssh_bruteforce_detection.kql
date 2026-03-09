@@ -1,0 +1,9 @@
+// SSH Brute Force Detection
+// Detects repeated authentication attempts against the SSH honeypot
+
+Syslog
+| where ProcessName == "sshd"
+| where SyslogMessage contains "Invalid user"
+| parse SyslogMessage with * "Invalid user " user " from " ip " port " *
+| summarize Attempts=count() by ip, user
+| order by Attempts desc
