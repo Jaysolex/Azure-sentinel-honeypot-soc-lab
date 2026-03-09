@@ -263,13 +263,18 @@ Captured attacker IP addresses:
 13.81.183.29
 ```
 Screenshots
+
 Honeypot Attack Logs
+![cowrie-honeypot-attacks](screenshots/cowrie-honeypot-attacks.png)
 
 Sentinel Agent Heartbeat
+![sentinel-agent-heartbeat](screenshots/sentinel-agent-heartbeat.png)
 
 SSH Attack Detection
+![ssh-attack-detectiomn](screenshots/ssh-attack-detection.png)
 
 DeepBlueCLI Threat Analysis
+![DeepBlueCli](screenshots/deepbluecli-event-analysis-1.png)
 
 MITRE ATT&CK Mapping
 | Behavior          | Technique |
