@@ -1,0 +1,9 @@
+// Top Attacker IP Detection
+// Identifies the most active IP addresses attempting SSH authentication
+
+Syslog
+| where Facility == "auth"
+| where SyslogMessage contains "Invalid user"
+| extend AttackerIP = extract(@"\d+\.\d+\.\d+\.\d+", 0, SyslogMessage)
+| summarize Attempts=count() by AttackerIP
+| sort by Attempts desc
