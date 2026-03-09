@@ -65,7 +65,7 @@ Microsoft Sentinel performs:
 
 ## 1️⃣ SSH Brute Force Detection
 
-Query: [`queries/sentinel-kql-queries.kql`](queries/sentinel-kql-queries.kql)
+Query: [`queries/sentinel-kql-queries.kql`](queries/ssh_bruteforce_detection.kql)
 
 Detects repeated authentication attempts against the honeypot.
 
