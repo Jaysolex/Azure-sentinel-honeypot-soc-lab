@@ -102,6 +102,8 @@ SSH Attack Detection
 
 3️⃣ Targeted Username Enumeration
 
+query: [`targeted_usernames.kql`](queries/targeted_usernames.kql)
+
 Identifies usernames attackers attempt to brute force.
 
 ```kql
