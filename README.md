@@ -279,56 +279,40 @@ MITRE ATT&CK Mapping
 | Valid Account Use | T1078     |
 | Remote Services   | T1021     |
 | Command Execution | T1059     |
+
+
+Skills Demonstrated
+```
 Cloud Security Engineering
-
 Honeypot Deployment
-
 Linux Server Administration
-
 Threat Intelligence Collection
-
 SOC Threat Hunting
-
 SIEM Integration
-
 KQL Detection Engineering
-
 Windows Security Log Analysis
+```
 
-Tools Used
+##Tools Used##
 
+```
 Microsoft Azure
-
 Microsoft Sentinel
-
 Cowrie SSH Honeypot
-
 Azure Monitor Agent
-
 Log Analytics Workspace
-
 DeepBlueCLI
-
 PowerShell
-
 KQL (Kusto Query Language)
+```
 
-Project Outcome
+##Project Outcome##
 
 This lab demonstrates the ability to:
-
 Deploy a cloud honeypot environment
-
 Capture real attacker activity from the internet
-
 Ingest security telemetry into Microsoft Sentinel
-
 Detect brute-force authentication attempts
-
 Perform threat hunting using KQL queries
-
 Analyze attacker infrastructure using threat intelligence
-
 Build SOC-style detection workflows for real-world attacks
-
-
