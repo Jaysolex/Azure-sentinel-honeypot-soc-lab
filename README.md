@@ -164,7 +164,7 @@ A Windows Server 2025 Domain Controller was deployed to simulate enterprise auth
 
 Security events were collected and analyzed using DeepBlueCLI and PowerShell event analysis.
 
-Example results:
+Results:
 
 ```
 EventID Count Description
