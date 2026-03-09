@@ -28,36 +28,7 @@ This lab simulates a **cloud SOC monitoring environment** combining honeypot tel
 
 ![SOC Architecture](architecture/soc-lab-architecture.PNG)
 
-
-
 ---
-
-# Example Sentinel Detection Query
-
-The following KQL query was used in Microsoft Sentinel to detect **SSH brute-force authentication attempts** captured by the Cowrie honeypot.
-
-The query extracts:
-
-- Attacker IP addresses
-- Targeted usernames
-- Number of authentication attempts
-
-This allows SOC analysts to quickly identify **active brute-force sources and targeted accounts**.
-
-query:  [`queries/sentinel-kql-queries.kql`](queries/SSH-auth-brutfrorce-attemp.kql)
-
-```kql
-Syslog
-| where Facility == "auth"
-| where SyslogMessage contains "Invalid user"
-| extend
-    AttackerIP = extract(@"\d+\.\d+\.\d+\.\d+", 0, SyslogMessage),
-    Username = extract(@"Invalid user ([^ ]+)", 1, SyslogMessage)
-| summarize Attempts=count() by AttackerIP, Username
-| sort by Attempts desc
-```
-![sentinel-attack-timeline-chart](screenshots/sentinel-attack-timeline-chart.png)
-
 
 # Data Flow Explanation
 
@@ -94,7 +65,8 @@ Microsoft Sentinel performs:
 
 ## 1️⃣ SSH Brute Force Detection
 
-Query: [`queries/sentinel-kql-queries.kql`](queries/ssh_bruteforce_detection.kql)
+Query:  
+[`queries/ssh_bruteforce_detection.kql`](queries/ssh_bruteforce_detection.kql)
 
 Detects repeated authentication attempts against the honeypot.
 
@@ -106,12 +78,13 @@ Syslog
 | summarize Attempts=count() by ip, user
 | order by Attempts desc
 ```
-![ssh-bruteforce-aatempt-chart](screenshots/ssh-brute-force-chat.png)
-MITRE: T1110 – Brute Force
+MITRE Technique: T1110.001 – Brute Force
+
 
 2️⃣ Top Attacker IP Detection
 
-Query: [`queries/top_attacker_ips.kql`](queries/top_attacker_ips.kql)
+Query: 
+[`queries/top_attacker_ips.kql`](queries/top_attacker_ips.kql)
 
 Identifies the most active attacking IP addresses.
 
@@ -123,15 +96,16 @@ Syslog
 | summarize Attempts=count() by AttackerIP
 | sort by Attempts desc
 ```
-
-📸 Screenshot
+📸 Example Detection Output
 ![top attackers-ip](screenshots/top-attacker-ip-chat.png)
 
-SSH Attack Detection
+Sentinel SSH Attack Detection
+
 
 3️⃣ Targeted Username Enumeration
 
-query: [`targeted_usernames.kql`](queries/targeted_usernames.kql)
+query: 
+[`targeted_usernames.kql`](queries/targeted_usernames.kql)
 
 Identifies usernames attackers attempt to brute force.
 
@@ -147,10 +121,9 @@ Syslog
 Attackers commonly probe for:
 
 Admin accounts
-
 Service accounts
-
 Development accounts
+
 
 4️⃣ Brute Force Behavior Detection
 
@@ -168,14 +141,16 @@ Syslog
 ```
 ![high-frequency-authentication-attempt](screenshots/high-frequency-authentication-attempt.png)
 
-MITRE: T1110 – Brute Force
+MITRE Technique: T1110.001 – Brute Force
+
+
 
 5️⃣ Attack Timeline Visualization
 
-query: [`attack-timeline-visualization`](queries/attack_timeline.kql)
+query: 
+[`attack-timeline-visualization`](queries/attack_timeline.kql)
 
 Displays attack frequency over time.
-
 ```kql
 Syslog
 | where Facility == "auth"
@@ -183,17 +158,17 @@ Syslog
 | summarize Attempts=count() by bin(TimeGenerated, 5m)
 | render timechart
 ```
+📸 Attack Timeline Visualization
 ![attack-timeline-visualizatio](screenshots/sentinel_attack_timeline_chart.png)
-
+SSH-Attack-Timeline
 This allows SOC analysts to visualize attack spikes and automated scanning behavior
 
-Active Directory Monitoring
 
+##Active Directory Monitoring#+
 A Windows Server 2025 Domain Controller was deployed to simulate enterprise authentication activity.
-
 Security events were collected and analyzed using DeepBlueCLI and PowerShell event analysis.
 
-Results:
+Example Results:
 
 ```
 EventID Count Description
@@ -202,8 +177,9 @@ EventID Count Description
 4672    1375  Special Privileges Assigned
 4648      48  Explicit Credential Logon
 ```
+📸 DeepBlueCLI Threat Detection
 
-Screenshot:
+![DeepBlueCLi](screenshots/deepbluecli-threat-detections.png)
 
 Honeypot Deployment
 Clone Cowrie Repository
@@ -246,7 +222,6 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 22 -j REDIRECT --to-port 2222
 ```
 
 This ensures attackers interacting with port 22 connect to the honeypot instead of the real SSH service.
-
 Threat Intelligence Investigation
 
 
@@ -259,29 +234,21 @@ ASN:
 AS8075 – Microsoft Corporation
 ```
 Security intelligence platforms reported 933 attack events associated with this IP.
-
 Security vendors flagging this IP include:
 
 GreyNoise
-
 CriminalIP
-
 CyRadar
-
 MalwareURL
-
 Guardpot
 
 Although the IP belongs to Microsoft Azure, cloud infrastructure is frequently abused by attackers due to:
 
 Disposable virtual machines
-
 Rapidly rotating IP addresses
-
 Global infrastructure access
 
-Indicators of Compromise
-
+Indicators of Compromise (IOCs)
 Captured attacker IP addresses:
 ```
 64.225.55.168
