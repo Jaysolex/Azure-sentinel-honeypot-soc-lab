@@ -1,0 +1,8 @@
+// SSH Attack Timeline
+// Visualizes attack activity over time
+
+Syslog
+| where Facility == "auth"
+| where SyslogMessage contains "Invalid user"
+| summarize Attempts=count() by bin(TimeGenerated, 5m)
+| render timechart
