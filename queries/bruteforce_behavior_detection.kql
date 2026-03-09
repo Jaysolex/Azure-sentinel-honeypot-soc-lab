@@ -1,0 +1,10 @@
+// Brute Force Behavior Detection
+// Detects high frequency authentication attempts from a single IP
+
+Syslog
+| where Facility == "auth"
+| where SyslogMessage contains "Invalid user"
+| extend AttackerIP = extract(@"\d+\.\d+\.\d+\.\d+", 0, SyslogMessage)
+| summarize Attempts=count() by AttackerIP, bin(TimeGenerated, 5m)
+| where Attempts > 5
+| sort by Attempts desc
