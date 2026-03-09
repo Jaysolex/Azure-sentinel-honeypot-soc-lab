@@ -1,0 +1,10 @@
+Syslog
+| where TimeGenerated >= ago(7d)
+| where Facility == "auth"
+| where SyslogMessage contains "Invalid user"
+| extend AttackerIP = extract(@"\d+\.\d+\.\d+\.\d+",0,SyslogMessage)
+| summarize Attempts=count() by AttackerIP
+| extend geo = geo_info_from_ip_address(AttackerIP)
+| extend Country = tostring(geo.country)
+| project Country, AttackerIP, Attempts
+| sort by Attempts desc
