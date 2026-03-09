@@ -31,7 +31,6 @@ This lab simulates a **cloud SOC monitoring environment** combining honeypot tel
 
 
 ---
----
 
 # Example Sentinel Detection Query
 
