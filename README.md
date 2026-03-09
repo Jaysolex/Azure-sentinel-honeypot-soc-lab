@@ -143,6 +143,8 @@ MITRE: T1110 – Brute Force
 
 5️⃣ Attack Timeline Visualization
 
+query: [`attack-timeline-visualization`](queries/attack_timeline.kql)
+
 Displays attack frequency over time.
 
 ```kql
@@ -152,6 +154,8 @@ Syslog
 | summarize Attempts=count() by bin(TimeGenerated, 5m)
 | render timechart
 ```
+![attack-timeline-visualizatio](screenshots/sentinel_attack_timeline_chart.png)
+
 This allows SOC analysts to visualize attack spikes and automated scanning behavior
 
 Active Directory Monitoring
