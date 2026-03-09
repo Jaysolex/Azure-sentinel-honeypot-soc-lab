@@ -114,7 +114,7 @@ Syslog
 | summarize Attempts=count() by Username
 | sort by Attempts desc
 ```
-
+![targeted attacker's attept](screenshots/attemppt-to-bruteforce.png)
 Attackers commonly probe for:
 
 Admin accounts
