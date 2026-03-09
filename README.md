@@ -28,7 +28,37 @@ This lab simulates a **cloud SOC monitoring environment** combining honeypot tel
 
 ![SOC Architecture](architecture/soc-lab-architecture.PNG)
 
+
+
 ---
+---
+
+# Example Sentinel Detection Query
+
+The following KQL query was used in Microsoft Sentinel to detect **SSH brute-force authentication attempts** captured by the Cowrie honeypot.
+
+The query extracts:
+
+- Attacker IP addresses
+- Targeted usernames
+- Number of authentication attempts
+
+This allows SOC analysts to quickly identify **active brute-force sources and targeted accounts**.
+
+query:  [`queries/sentinel-kql-queries.kql`](queries/SSH-auth-brutfrorce-attemp.kql)
+
+```kql
+Syslog
+| where Facility == "auth"
+| where SyslogMessage contains "Invalid user"
+| extend
+    AttackerIP = extract(@"\d+\.\d+\.\d+\.\d+", 0, SyslogMessage),
+    Username = extract(@"Invalid user ([^ ]+)", 1, SyslogMessage)
+| summarize Attempts=count() by AttackerIP, Username
+| sort by Attempts desc
+```
+![sentinel-attack-timeline-chart](screenshots/sentinel-attack-timeline-chart.png)
+
 
 # Data Flow Explanation
 
