@@ -125,6 +125,8 @@ Development accounts
 
 4️⃣ Brute Force Behavior Detection
 
+query: [`high-frequency-auth-attempt.kql`](queries/high-frequency-auth-attempt.kql)
+
 Detects high-frequency authentication attempts from a single source.
 
 ```kql
@@ -135,6 +137,8 @@ Syslog
 | summarize Attempts=count() by AttackerIP, bin(TimeGenerated, 5m)
 | where Attempts > 5
 ```
+![high-frequency-authentication-attempt](screenshots/high-frequency-authentication-attempt.png)
+
 MITRE: T1110 – Brute Force
 
 5️⃣ Attack Timeline Visualization
