@@ -1,0 +1,8 @@
+Syslog
+| where Facility == "auth"
+| where SyslogMessage contains "Invalid user"
+| extend
+    AttackerIP = extract(@"\d+\.\d+\.\d+\.\d+", 0, SyslogMessage),
+    Username = extract(@"Invalid user ([^ ]+)", 1, SyslogMessage)
+| summarize Attempts=count() by AttackerIP, Username
+| sort by Attempts desc
