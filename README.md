@@ -60,6 +60,30 @@ Microsoft Sentinel performs:
 - Attack investigation  
 
 ---
+## Sentinel Invalid User Query
+
+This detection query was created in Microsoft Sentinel to identify repeated SSH authentication failures in Linux Syslog logs.
+
+Attackers commonly attempt to brute-force SSH access by trying invalid usernames. By analyzing Syslog authentication logs, we can detect these attempts and identify the attacking IP addresses.
+
+### KQL Query
+[`sentinel-invalid-user-query.kql`](queries/sentinel-invalid-user-query.kql)
+
+```kql
+Syslog
+| where TimeGenerated >= ago(7d)
+| where Facility == "auth"
+| where SyslogMessage contains "Invalid user"
+| extend AttackerIP = extract(@"(\d+\.\d+\.\d+\.\d+)",0,SyslogMessage)
+| summarize Attempts=count() by AttackerIP
+| extend geo = geo_info_from_ip_address(AttackerIP)
+| extend Country = tostring(geo.country)
+| project Country, AttackerIP, Attempts
+| sort by Attempts desc
+```
+screenshot: sentinel-invalid-user-query
+![sentinel-invalid-user-query](screenshots/sentinel-invalid-user-query.png)
+
 
 # Detection Walkthrough
 
