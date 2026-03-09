@@ -77,9 +77,12 @@ Syslog
 | summarize Attempts=count() by ip, user
 | order by Attempts desc
 ```
+![ssh-bruteforce-aatempt-chart](screenshots/ssh-brute-force-chat.png)
 MITRE: T1110 – Brute Force
 
 2️⃣ Top Attacker IP Detection
+
+Query: [`queries/top_attacker_ips.kql`](queries/top_attacker_ips.kql)
 
 Identifies the most active attacking IP addresses.
 
