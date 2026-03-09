@@ -321,3 +321,10 @@ Detect brute-force authentication attempts
 Perform threat hunting using KQL queries
 Analyze attacker infrastructure using threat intelligence
 Build SOC-style detection workflows for real-world attacks
+
+
+
+
+
+*Figure: Real-world SSH attack attempts captured by the Cowrie honeypot deployed in Microsoft Azure.*  
+*Project Author: Solomon James*
