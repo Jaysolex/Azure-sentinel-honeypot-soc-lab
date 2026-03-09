@@ -81,9 +81,12 @@ Syslog
 | project Country, AttackerIP, Attempts
 | sort by Attempts desc
 ```
+Visualization:
+
+The visualization highlights attacker IP addresses and their geographic locations generating the most failed SSH login attempts.
+
 screenshot: sentinel-invalid-user-query
 ![sentinel-invalid-user-query](screenshots/sentinel-invalid-user-query.png)
-
 
 # Detection Walkthrough
 
